@@ -6,7 +6,7 @@ from torch.optim import Adam
 import torch.nn as nn
 from configs.arg_configs import lstm_crf_opts, cat_seq_opts
 from src.models.models.cat_seq import CatSeq
-from src.models.models.dynamic_cat_seq import DynamicCatSeq
+from src.models.models.dual_cat_seq import DualCatSeq
 from src.models.models.lstm_crf import BiRnnCrf
 from collections import OrderedDict
 
@@ -23,7 +23,7 @@ class BaseTrainer(object):
         elif opt.model_name == 'dcat_seq':
             lstm_crf_opts(opt)
             cat_seq_opts(opt)
-            model = DynamicCatSeq(opt)
+            model = DualCatSeq(opt)
 
         if opt.local_rank in [0, -1]:
             logging.info(model)

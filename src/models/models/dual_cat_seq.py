@@ -9,13 +9,13 @@ from src.models.models.lstm_crf import BiRnnCrf
 from src.utils.constants import Tag2Idx, BOS_WORD, EOS_WORD
 
 
-class DynamicCatSeq(nn.Module):
+class DualCatSeq(nn.Module):
     """
     Dynamic Copy attention Seq2Seq
     """
 
     def __init__(self, opt):
-        super(DynamicCatSeq, self).__init__()
+        super(DualCatSeq, self).__init__()
         self.encoder = Encoder(opt)
         self.decoder = NERDecoder(opt)
         self.Ner = BiRnnCrf(opt)

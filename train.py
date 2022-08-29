@@ -5,7 +5,7 @@ import time
 from configs.arg_configs import init_logging, vocab_opts, train_opts, predict_opts
 from src.io.dataloader import load_data_and_vocab
 from src.trainer.cat_seq_trainer import CatSeqTrainer
-from src.trainer.dynamic_cat_seq_trainer import DynamicCatSeqTrainer
+from src.trainer.dynamic_cat_seq_trainer import DualCatSeqTrainer
 from src.trainer.lstm_crf_trainer import LSTMCRFTrainer
 from src.utils.constants import SEED
 from src.utils.functions import set_seed, time_since
@@ -45,7 +45,7 @@ def main(opt):
     elif opt.model_name == 'cat_seq':
         trainer = CatSeqTrainer()
     elif opt.model_name == 'dcat_seq':
-        trainer = DynamicCatSeqTrainer()
+        trainer = DualCatSeqTrainer()
     train_data_loader, valid_data_loader, vocab = load_data_and_vocab(opt)
     trainer.train_model(train_data_loader, valid_data_loader, opt)
 

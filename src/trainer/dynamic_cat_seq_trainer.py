@@ -11,9 +11,9 @@ from src.utils.metrics import compute_precision, compute_recall
 stemmer = PorterStemmer()
 
 
-class DynamicCatSeqTrainer(BaseTrainer):
+class DualCatSeqTrainer(BaseTrainer):
     def __init__(self):
-        super(DynamicCatSeqTrainer, self).__init__()
+        super(DualCatSeqTrainer, self).__init__()
 
     def train_one_batch(self, model, batch, opt):
         src, src_lens, src_mask, src_oov, oov_lists, src_str_list, trg_str, absent_trg_str, present_trg_str, trg, trg_oov, trg_lens, trg_mask, tags, _ = batch

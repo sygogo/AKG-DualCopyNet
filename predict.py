@@ -9,7 +9,7 @@ from src.inference.sequence_generator import SequenceGenerator
 from src.io.databuilder import build_dataset, build_interactive_predict_dataset
 from src.io.dataloader import load_vocab, build_data_loader
 from src.trainer.cat_seq_trainer import CatSeqTrainer
-from src.trainer.dynamic_cat_seq_trainer import DynamicCatSeqTrainer
+from src.trainer.dynamic_cat_seq_trainer import DualCatSeqTrainer
 from src.trainer.lstm_crf_trainer import LSTMCRFTrainer
 from src.utils.functions import common_process_opt, read_tokenized_src_file, time_since
 
@@ -45,7 +45,7 @@ def main(opt):
     elif opt.model_name == 'cat_seq':
         trainer = CatSeqTrainer()
     elif opt.model_name == 'dcat_seq':
-        trainer = DynamicCatSeqTrainer()
+        trainer = DualCatSeqTrainer()
 
     # Print out predict path
     logging.info("Prediction path: %s" % opt.pred_path)
