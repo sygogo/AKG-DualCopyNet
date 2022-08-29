@@ -57,6 +57,15 @@ python predict.py
  -model_path data/kp20k_exp
 ```
 
+| Dataset | beam size | max length |
+|:--------|----------:|:----------:|
+| nus     |       200 |     60     |
+| semeval |       200 |     30     |
+| inspec  |       200 |     60     |
+| kp20k   |        20 |     20     |
+
+
+
 ```shell
 python evaluation.py
 -pred_file_path data/pred/${dataset}/predictions_dcat_seq.txt
