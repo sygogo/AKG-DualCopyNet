@@ -18,7 +18,7 @@ torchvision==0.12.0
 
 ## DataSet
 
-The datasets can be downloaded from here, which are the tokenized version of the datasets provided
+The datasets can be downloaded from [here](https://drive.google.com/file/d/1wDZjybrAThhLstVe_hh0fQmKgZbNQgB6/view?usp=sharing), which are the tokenized version of the datasets provided
 by [Ken Chen](https://github.com/kenchan0226/keyphrase-generation-rl):
 
 * The testsets directory contains the five datasets for testing (i.e., inspec, nus, and semeval and kp20k), where each
