@@ -13,15 +13,16 @@ nltk==3.7
 numpy==1.21.5
 scikit_learn==1.0.2
 torch==1.11.0
-torchvision==0.12.0
 ```
 
 ## DataSet
 
-The datasets can be downloaded from [here](https://drive.google.com/file/d/1wDZjybrAThhLstVe_hh0fQmKgZbNQgB6/view?usp=sharing), which are the tokenized version of the datasets provided
-by [Ken Chen](https://github.com/kenchan0226/keyphrase-generation-rl):
+The datasets can be downloaded
+from [here](https://drive.google.com/file/d/1wDZjybrAThhLstVe_hh0fQmKgZbNQgB6/view?usp=sharing), which are the tokenized
+version of the datasets provided
+by https://github.com/kenchan0226/keyphrase-generation-rl :
 
-* The testsets directory contains the five datasets for testing (i.e., inspec, nus, and semeval and kp20k), where each
+* The testsets directory contains the four datasets for testing (i.e., inspec, nus, and semeval and kp20k), where each
   of the datasets contains test_src.txt and test_trg.txt.
 
 ## Data Processing
