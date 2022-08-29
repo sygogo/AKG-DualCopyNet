@@ -11,7 +11,7 @@ from src.utils.constants import Tag2Idx, BOS_WORD, EOS_WORD
 
 class DualCatSeq(nn.Module):
     """
-    Dynamic Copy attention Seq2Seq
+    dual Copy attention Seq2Seq
     """
 
     def __init__(self, opt):
