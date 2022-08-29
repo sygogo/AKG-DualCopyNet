@@ -23,18 +23,11 @@ by [Ken Chen](https://github.com/kenchan0226/keyphrase-generation-rl):
 
 * The testsets directory contains the five datasets for testing (i.e., inspec, nus, and semeval and kp20k), where each
   of the datasets contains test_src.txt and test_trg.txt.
-* The kp20k_separated directory contains the training and validation files (i.e., train_src.txt, train_trg.txt,
-  valid_src.txt and valid_trg.txt).
-* Each line of the *_src.txt file is the source document, which contains the tokenized words of title <eos> abstract .
-* Each line of the *_trg.txt file contains the target keyphrases separated by an ; character. The <peos> is used to mark
-  the end of present ground-truth keyphrases and train a separate set loss for SetTrans model. For example, each line
-  can be like present keyphrase one;present keyphrase two;<peos>;absent keyprhase one;absent keyphrase two.
 
 ## Data Processing
 
 ```python
-python
-preprocess.py - data_dir / your_path / kp20k_sorted - save_data_dir / your_path / data
+python preprocess.py - data_dir / your_path / kp20k_sorted - save_data_dir / your_path / data
 ```
 
 ## Train Model
