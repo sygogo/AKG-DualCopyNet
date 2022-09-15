@@ -62,7 +62,7 @@ python predict.py
 | nus     |       200 |     60     |
 | semeval |       200 |     30     |
 | inspec  |       200 |     60     |
-| kp20k   |        20 |     20     |
+| kp20k   |        20 |     30     |
 
 
 
