@@ -4,7 +4,7 @@ A source code for the Coling 2022 paper [Automatic Keyphrase Generation by Incor
 Mechanisms in Sequence-to-Sequence Learning]().Our Implementation is built on the starter code
 from https://github.com/kenchan0226/keyphrase-generation-rl and https://github.com/jiacheng-ye/kg_one2set
 
-![img.png](imgs/img.png)
+![img.png](imgs/img.jpg)
 
 ## Requirements
 
