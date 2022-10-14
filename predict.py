@@ -30,7 +30,7 @@ def predict(test_data_loader, model, opt):
 def main(opt):
     vocab = load_vocab(opt)
     src_file = opt.src_file
-
+    opt.device = torch.device('cuda', opt.local_rank)
     tokenized_src = read_tokenized_src_file(src_file, remove_title_eos=opt.remove_title_eos)
 
     test_data = build_interactive_predict_dataset(tokenized_src, opt, include_original=True)

@@ -91,7 +91,7 @@ def predict_opts(parser):
                         help="""Random seed used for the experiments
                                 reproducibility.""")
 
-    parser.add_argument("--local_rank", type=int, default=-1)
+    parser.add_argument("-local_rank", type=int, default=0, help="GPU ID")
 
 
 def train_opts(parser):
@@ -139,7 +139,7 @@ def train_opts(parser):
                             Recommended settings: sgd = 1, adagrad = 0.1,
                             adadelta = 1, adam = 0.001""")
 
-    parser.add_argument("--local_rank", type=int, default=-1)
+    parser.add_argument("-local_rank", type=int, default=0, help="Gpu id")
 
 
 def post_predict_opts(parser):

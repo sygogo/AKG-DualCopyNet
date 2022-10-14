@@ -1,10 +1,10 @@
 # AKG-DualCopyNet
 
-A source code for the Coling 2022 paper [Automatic Keyphrase Generation by Incorporating Dual Copy
-Mechanisms in Sequence-to-Sequence Learning]().Our Implementation is built on the starter code
-from https://github.com/kenchan0226/keyphrase-generation-rl and https://github.com/jiacheng-ye/kg_one2set
+A source code for the COLING 2022 paper [Automatic Keyphrase Generation by Incorporating Dual Copy
+Mechanisms in Sequence-to-Sequence Learning](https://aclanthology.org/2022.coling-1.204/).
 
-![img.png](imgs/img.jpg)
+Our Implementation is built on the projects:
+https://github.com/kenchan0226/keyphrase-generation-rl and https://github.com/jiacheng-ye/kg_one2set
 
 ## Requirements
 
@@ -15,11 +15,7 @@ scikit_learn==1.0.2
 torch==1.11.0
 ```
 
-
-
 ## DataSet
-
-
 
 The datasets can be downloaded
 from [here](https://drive.google.com/file/d/1wDZjybrAThhLstVe_hh0fQmKgZbNQgB6/view?usp=sharing), which are the tokenized
@@ -31,14 +27,21 @@ by https://github.com/kenchan0226/keyphrase-generation-rl :
 
 ## Data Processing
 
-```python
+```shell
 python preprocess.py - data_dir / your_path / kp20k_sorted - save_data_dir / your_path / data
 ```
 
 ## Train Model
 
+Only support single GPU for training model
+
 ```shell
-sh scripts/train_dcatseq.sh
+python train.py 
+-data data/kp20k_preprocess  
+-vocab data/kp20k_preprocess  
+-exp_path data/kp20k_exp  
+-model_path data/kp20k_exp  
+-model_name dcat_seq
 ```
 
 ## Evaluation Model
@@ -57,14 +60,14 @@ python predict.py
  -model_path data/kp20k_exp
 ```
 
+Note: this is our setting for predict , you can modify it by yourself.
+
 | Dataset | beam size | max length |
 |:--------|----------:|:----------:|
 | nus     |       200 |     60     |
 | semeval |       200 |     30     |
 | inspec  |       200 |     60     |
 | kp20k   |        20 |     30     |
-
-
 
 ```shell
 python evaluation.py
@@ -75,9 +78,6 @@ python evaluation.py
 -exp_path data/pred/semeval
 -model_name dcat_seq
 ```
-
-
-
 
 
 

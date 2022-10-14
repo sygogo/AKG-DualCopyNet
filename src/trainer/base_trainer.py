@@ -25,14 +25,14 @@ class BaseTrainer(object):
             cat_seq_opts(opt)
             model = DualCatSeq(opt)
 
-        if opt.local_rank in [0, -1]:
-            logging.info(model)
-            total_params = sum([param.nelement() for param in model.parameters()])
-            logging.info('model parameters: %d, %.2fM' % (total_params, total_params * 4 / 1024 / 1024))
+        logging.info(model)
+        total_params = sum([param.nelement() for param in model.parameters()])
+        logging.info('model parameters: %d, %.2fM' % (total_params, total_params * 4 / 1024 / 1024))
 
         if load_from or opt.start_epoch_at > 0:
             new_state_dict = OrderedDict()
             state_dict = torch.load(open('{}/{}.pt'.format(opt.model_path, opt.model_name), 'rb'))
+            # to support model by mutiple gpus training
             for k, v in state_dict.items():
                 if str(k).startswith('module'):
                     name = k[7:]  # remove `module.`
@@ -42,15 +42,8 @@ class BaseTrainer(object):
             # load params
             model.load_state_dict(new_state_dict)
 
-        device = torch.device('cuda')
-        opt.device = device
-        model = model.to(device)
-        # 是否采用分布式
-        if opt.local_rank == -1:
-            return model
-        else:
-            model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[opt.local_rank], output_device=opt.local_rank, find_unused_parameters=True)
-            return model
+        model = model.to(opt.device)
+        return model
 
     def init_optimizer(self, model, opt):
         """
@@ -88,31 +81,29 @@ class BaseTrainer(object):
                 if opt.max_grad_norm > 0:
                     nn.utils.clip_grad_norm_(model.parameters(), opt.max_grad_norm)
             # after each epoch to eval
-            if opt.local_rank in [0, -1]:
-                model.eval()
-                with torch.no_grad():
-                    valid_loss_total = 0
-                    val_total_batch = 0
-                    for val_batch_i, val_batch in enumerate(valid_data_loader):
-                        val_total_batch += 1
-                        loss = self.train_one_batch(model, val_batch, opt)
-                        valid_loss_total += loss.item()
-                    valid_loss = valid_loss_total / val_total_batch
+            model.eval()
+            with torch.no_grad():
+                valid_loss_total = 0
+                val_total_batch = 0
+                for val_batch_i, val_batch in enumerate(valid_data_loader):
+                    val_total_batch += 1
+                    loss = self.train_one_batch(model, val_batch, opt)
+                    valid_loss_total += loss.item()
+                valid_loss = valid_loss_total / val_total_batch
 
-                    if valid_loss < best_loss:
-                        best_loss = valid_loss
-                        torch.save(model.state_dict(), open('{}/{}.pt'.format(opt.model_path, opt.model_name), 'wb'))
-                        early_stop_tolerance = 0
-                    else:
-                        early_stop_tolerance += 1
-                        logging.info("Valid loss does not drop,early_stop_tolerance:{}".format(early_stop_tolerance))
-                    logging.info("Epoch %d; batch: %d; loss: %.3f; val_loss: %.3f,best_loss: %.3f" %
-                                 (epoch, total_batch, loss_total / total_batch, valid_loss, best_loss))
-                model.train()
+                if valid_loss < best_loss:
+                    best_loss = valid_loss
+                    torch.save(model.state_dict(), open('{}/{}.pt'.format(opt.model_path, opt.model_name), 'wb'))
+                    early_stop_tolerance = 0
+                else:
+                    early_stop_tolerance += 1
+                    logging.info("Valid loss does not drop,early_stop_tolerance:{}".format(early_stop_tolerance))
+                logging.info("Epoch %d; batch: %d; loss: %.3f; val_loss: %.3f,best_loss: %.3f" %
+                             (epoch, total_batch, loss_total / total_batch, valid_loss, best_loss))
+            model.train()
             # stopping
             if early_stop_tolerance >= opt.early_stop_tolerance:
                 logging.info("early stopping ...")
-                break
                 sys.exit()
 
     def train_one_batch(self, model, batch, opt):

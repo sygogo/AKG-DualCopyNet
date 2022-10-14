@@ -21,16 +21,11 @@ def load_vocab(opt):
     return vocab
 
 
-def build_data_loader(data, opt, shuffle=False, load_train=True):
+def build_data_loader(data, opt, load_train=True):
     keyphrase_dataset = KeyphraseDataset(examples=data, word2idx=opt.vocab['word2idx'], idx2word=opt.vocab['idx2word'], load_train=load_train)
 
-    if opt.local_rank == -1:
-        data_loader = DataLoader(dataset=keyphrase_dataset, collate_fn=keyphrase_dataset.collate_fn_one2seq, num_workers=opt.batch_workers,
-                                 batch_size=opt.batch_size, shuffle=False, pin_memory=True, worker_init_fn=worker_init_fn)
-    else:
-        train_sampler = DistributedSampler(keyphrase_dataset)
-        data_loader = DataLoader(dataset=keyphrase_dataset, collate_fn=keyphrase_dataset.collate_fn_one2seq, num_workers=opt.batch_workers,
-                                 batch_size=opt.batch_size, shuffle=False, pin_memory=True, worker_init_fn=worker_init_fn, sampler=train_sampler)
+    data_loader = DataLoader(dataset=keyphrase_dataset, collate_fn=keyphrase_dataset.collate_fn_one2seq, num_workers=opt.batch_workers,
+                             batch_size=opt.batch_size, pin_memory=True, worker_init_fn=worker_init_fn)
     return data_loader
 
 
@@ -41,14 +36,13 @@ def load_data_and_vocab(opt):
     # load training dataset
 
     train_data = torch.load(data_path % "train", 'wb')
-    train_loader = build_data_loader(data=train_data, opt=opt, shuffle=False)
+    train_loader = build_data_loader(data=train_data, opt=opt)
     # load validation dataset
     valid_data = torch.load(data_path % "valid", 'wb')
-    valid_loader = build_data_loader(data=valid_data, opt=opt, shuffle=False)
+    valid_loader = build_data_loader(data=valid_data, opt=opt)
 
-    if opt.local_rank in [0, -1]:
-        logging.info("Loading train and validate data from '%s'" % opt.data)
-        logging.info('#(train data size: #(batch)=%d' % (len(train_loader)))
-        logging.info('#(valid data size: #(batch)=%d' % (len(valid_loader)))
+    logging.info("Loading train and validate data from '%s'" % opt.data)
+    logging.info('#(train data size: #(batch)=%d' % (len(train_loader)))
+    logging.info('#(valid data size: #(batch)=%d' % (len(valid_loader)))
 
     return train_loader, valid_loader, vocab
