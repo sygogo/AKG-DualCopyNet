@@ -1,7 +1,7 @@
 # AKG-DualCopyNet
 
-A source code for the COLING 2022 paper [Automatic Keyphrase Generation by Incorporating Dual Copy
-Mechanisms in Sequence-to-Sequence Learning](https://aclanthology.org/2022.coling-1.204/).
+A source code for the COLING 2022 paper Automatic Keyphrase Generation by Incorporating Dual Copy
+Mechanisms in Sequence-to-Sequence Learning [paper](https://aclanthology.org/2022.coling-1.204/).
 
 Our Implementation is built on the projects:
 https://github.com/kenchan0226/keyphrase-generation-rl and https://github.com/jiacheng-ye/kg_one2set
