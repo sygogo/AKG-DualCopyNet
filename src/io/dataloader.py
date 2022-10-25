@@ -25,7 +25,7 @@ def build_data_loader(data, opt, load_train=True):
     keyphrase_dataset = KeyphraseDataset(examples=data, word2idx=opt.vocab['word2idx'], idx2word=opt.vocab['idx2word'], load_train=load_train)
 
     data_loader = DataLoader(dataset=keyphrase_dataset, collate_fn=keyphrase_dataset.collate_fn_one2seq, num_workers=opt.batch_workers,
-                             batch_size=opt.batch_size, pin_memory=True, worker_init_fn=worker_init_fn)
+                             batch_size=opt.batch_size, pin_memory=True, worker_init_fn=worker_init_fn, shuffle=True)
     return data_loader
 
 

@@ -33,7 +33,7 @@ python preprocess.py - data_dir / your_path / kp20k_sorted - save_data_dir / you
 
 ## Train Model
 
-Only support single GPU for training model
+This version is only support single GPU for training model. You can implement multiple GPus version with a few code changes.
 
 ```shell
 python train.py 
@@ -78,6 +78,7 @@ python evaluation.py
 -exp_path data/pred/semeval
 -model_name dcat_seq
 ```
+
 
 
 
